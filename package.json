@@ -1,5 +1,5 @@
 {
-  "name": "Drinking Buddies",
+  "name": "drinkingBuddies",
   "private": true,
   "version": "1.0.0",
   "description": "`Drinking Buddies Front End",
@@ -23,12 +23,14 @@
   "homepage": "https://github.com/cs-411-2019/front-end/blob/master/README.md",
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
+    "adminlte-reactjs": "^1.0.6",
     "bootstrap": "^4.3.1",
-    "react": "^16.4.0",
+    "react": "^16.8.6",
     "react-bootstrap": "^1.0.0-beta.6",
-    "react-dom": "^16.4.0",
+    "react-dom": "^16.8.6",
     "react-redux": "^5.0.7",
     "react-website": "^3.1.24",
+    "reactstrap": "^7.1.0",
     "redux": "^4.0.1"
   },
   "devDependencies": {

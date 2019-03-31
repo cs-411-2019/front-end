@@ -1,0 +1,11 @@
+android/**
+build/**
+coverage/**
+Docker/**
+flow-typed/**
+node_modules/**
+typings/**
+ios/**
+lib/**
+*.generated.js
+*.snap.js
