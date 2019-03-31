@@ -4,7 +4,6 @@
     ],
     "parser": "babel-eslint",
     "plugins": [
-      "thunderball",
       "jsx-control-statements"
     ],
     "overrides": [
@@ -53,23 +52,6 @@
           "vars": "all",
           "args": "none",
           "ignoreRestSiblings": true
-        }
-      ],
-      "thunderball/require-id": [
-        1,
-        {
-          "components": [
-            "a",
-            "Link",
-            "Input",
-            "button",
-            "Button",
-            "input",
-            "textarea",
-            "checkbox",
-            "select",
-            "Field"
-          ]
         }
       ],
       // custom jsx-control-statements to work with newer react
