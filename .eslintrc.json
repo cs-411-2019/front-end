@@ -1,0 +1,87 @@
+{
+    "extends": [
+      "airbnb"
+    ],
+    "parser": "babel-eslint",
+    "plugins": [
+      "jsx-control-statements"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "**/*.spec.js",
+          "**/__test__/*.js",
+          "**/__mocks__/*.js",
+          "jest.setup.js"
+        ],
+        "plugins": [
+          "jest"
+        ],
+        "env": {
+          "browser": true,
+          "jest/globals": true
+        },
+        "rules": {
+          "jest/no-disabled-tests": "warn",
+          "jest/no-focused-tests": "error",
+          "jest/no-identical-title": "error",
+          "jest/valid-expect": "off",
+          // allow tests to import from devDependencies
+          "import/no-extraneous-dependencies": [2, {
+            "devDependencies": true
+          }]
+        }
+      },
+      {
+        "files": [
+          "**/browser/**"
+        ],
+        "env": {
+          "browser": true
+        },
+        "globals": {
+          "fetch": true
+        }
+      }
+    ],
+    "rules": {
+      "linebreak-style": "off",
+      "no-unused-vars": [
+        "error",
+        {
+          "vars": "all",
+          "args": "none",
+          "ignoreRestSiblings": true
+        }
+      ],
+      // custom jsx-control-statements to work with newer react
+      // It allows <If> but not stuff like <Iff>
+      "react/jsx-no-undef": [
+        2,
+        {
+          "allowGlobals": true
+        }
+      ],
+      // This rule is identical to https://github.com/airbnb/javascript/blob/4817a6b75cd44fe8b28a16b06d33a5c65603a74c/packages/eslint-config-airbnb/rules/react-a11y.js#L188
+      // so this can be removed once it is released to npm
+      "jsx-a11y/anchor-is-valid": ["error", {
+        "components": ["Link"],
+        "specialLink": ["to"],
+        "aspects": ["noHref", "invalidHref", "preferButton"]
+      }],
+      // Keeping these custom rules
+      "react/jsx-filename-extension": 0,
+      "react/require-default-props": 0,
+      "react/forbid-prop-types": [0, {
+        "forbid": ["any","object","array"]
+      }]
+    },
+    "env": {
+      "jsx-control-statements/jsx-control-statements": true
+    },
+    "globals": {
+      // allow global "fetch" which Thunderball sets up
+      "fetch": true
+    }
+  }
+  
