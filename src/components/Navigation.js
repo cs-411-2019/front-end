@@ -32,11 +32,23 @@ class Navigation extends Component {
           <NavbarBrand href="/">Drinking Buddie</NavbarBrand>
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
-			  <NavItem>
+			  			<NavItem>
                 <NavLink href="/">Home</NavLink>
               </NavItem>
               <NavItem>
                 <NavLink href="/beers">Beers</NavLink>
+              </NavItem>
+							<NavItem>
+                <NavLink href="/bars">Bars</NavLink>
+              </NavItem>
+							<NavItem>
+                <NavLink href="/buddies">Buddies</NavLink>
+              </NavItem>
+							<NavItem>
+                <NavLink href="/reviews">Reviews</NavLink>
+              </NavItem>
+							<NavItem>
+                <NavLink href="/logout">Logout</NavLink>
               </NavItem>
             </Nav>
           </Collapse>
