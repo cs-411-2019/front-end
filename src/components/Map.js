@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';  
   const AnyReactComponent = ({ text }) => <div>{text}</div>;
+  const mapAPIKey = process.env.MAPS_API_KEY;
 
   class Map extends Component {
     static defaultProps = {
@@ -16,7 +17,7 @@ import GoogleMapReact from 'google-map-react';
         // Important! Always set the container height explicitly
         <div style={{ height: '100vh', width: '100%' }}>
           <GoogleMapReact
-            bootstrapURLKeys={{ key: '' }}
+            bootstrapURLKeys={{ key: mapAPIKey }}
             defaultCenter={this.props.center}
             defaultZoom={this.props.zoom}
           >
