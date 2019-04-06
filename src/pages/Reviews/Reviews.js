@@ -7,11 +7,17 @@ import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import './Reviews.css'
 
  class Reviews extends Component {
+	constructor(props){
+		super(props);
+		this.state = {reviewType: 'beer'}
+	}
 
-
+	reviewForm(event) {
+		this.setState({reviewType: event.target.value})
+	}
 
 	render() {
-		const { value, set } = this.props
+	
 		return (
 			<Container>
 				<Row>
@@ -20,9 +26,9 @@ import './Reviews.css'
 						<Form>
 							<FormGroup>
 								<Label for="reviewType">Review Type</Label>
-								<Input type="select" name="select" id="reviewType">
-									<option>Bar/Brewery</option>
-									<option>Beer</option>
+								<Input type="select" name="select" id="reviewType" onChange={this.reviewForm.bind(this)}>
+									<option value="beer">Beer</option>
+									<option value="bar-brewery">Bar/Brewery</option>
 								</Input>
 							</FormGroup>
 
@@ -31,6 +37,7 @@ import './Reviews.css'
 								<Input type="textarea" name="text" id="review" />
 							</FormGroup>
 							{/* TODO, add properties based upon with review type is selected */}
+							<h3>{this.state.reviewType}</h3>
 							<Button>Submit</Button>
 						</Form>
 					</Col>

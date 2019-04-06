@@ -6,9 +6,13 @@ import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 
 import './Beers.css'
 
+
+
  class Beers extends Component {
+
+
+
 	render() {
-		const { value, set } = this.props
 		return (
 			<Container>
 				<Row>
@@ -17,7 +21,7 @@ import './Beers.css'
 						<Form>
 							<FormGroup>
 								<Label for="review">Search for a Beer</Label>
-								<Input type="textarea" name="text" id="review" />
+								<Input type="textarea" name="text" id="review"/>
 							</FormGroup>
 							{/* TODO, Create Beer seach */}
 							<Button>Submit</Button>
