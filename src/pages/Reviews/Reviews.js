@@ -6,15 +6,98 @@ import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 
 import './Reviews.css'
 
+const DF_API_KEY = process.env.DF_API_KEY;
+const DF_URL = process.env.DF_URL;
+
  class Reviews extends Component {
 	constructor(props){
 		super(props);
-		this.state = {reviewType: 'beer'}
+		this.state = {
+			reviewType: 'beer',
+			isLoaded: false,
+			beerReviews: [],
+			barReviews: []
+		}
 	}
 
 	reviewForm(event) {
 		this.setState({reviewType: event.target.value})
 	}
+
+	submitReview(event){
+		if(this.state.reviewType === 'beer'){
+			saveBeerReview();
+		} else {
+		//	saveBarReview();
+		console.log("Bar Review");
+		}
+		console.log(event);
+		event.preventDefault();
+	}
+
+	
+	
+	  /*	getContactData: function() {
+			 var url = this.props.url;
+		 var key = this.props.apikey;
+		 var contactId = this.props.contactId;
+		 var token = localStorage.getItem('session_token');
+	 
+		  var params = '?ids=' + contactId;
+	 
+		   $.ajax({
+				 dataType: 'json',
+				 contentType: 'application/json; charset=utf-8',
+				 url: url + '/api/v2/db/_table/contact' + params,
+				 data: null,
+				 cache:false,
+				 method:'GET',
+				 headers: {
+					 "X-DreamFactory-API-Key": key,
+					 "X-DreamFactory-Session-Token": token
+				 },
+				 success:function (response) {
+					 if (response.hasOwnProperty('resource')) {
+						 this.setState({id: response.resource[0].id});
+						 this.setState({firstName: response.resource[0].first_name});
+						 this.setState({lastName: response.resource[0].last_name});
+						 this.setState({notes: response.resource[0].notes});
+						 this.setState({twitter: response.resource[0].twitter});
+						 this.setState({skype: response.resource[0].skype});
+	 
+						 this.getContactInfoData()
+					 }
+					 else
+						 console.log(response);
+				 }.bind(this),
+				 error: function(response) {
+					 this.setState({
+						 modalContent: {
+							 headline: response.statusText,
+							 body: response.responseJSON.error.message,
+							 extended: response.responseText
+						 }
+					 })
+					 
+					 this.openModal();
+				 }.bind(this)
+			 });
+	}, */
+	
+	  saveBeerReview(event){
+		fetch(`${DF_URL}`, {
+		  method: 'POST',
+		  headers: {
+			'Accept': 'application/json',
+			'Content-Type': 'application/json',
+			"X-DreamFactory-API-Key": DF_API_KEY,
+		  },
+		  body: JSON.stringify({
+			firstParam: 'yourValue',
+			secondParam: 'yourOtherValue',
+		  })
+		})
+	  }
 
 	render() {
 	
@@ -23,7 +106,7 @@ import './Reviews.css'
 				<Row>
 					<Col xs="12" lg="13">
 						<h3>Review form</h3>
-						<Form>
+						<Form onSubmit={this.submitReview}>
 							<FormGroup>
 								<Label for="reviewType">Review Type</Label>
 								<Input type="select" name="select" id="reviewType" onChange={this.reviewForm.bind(this)}>
@@ -71,7 +154,7 @@ import './Reviews.css'
 
 							{/* TODO, add properties based upon with review type is selected */}
 							<h3>{this.state.reviewType}</h3>
-							<Button>Submit</Button>
+							<Button >Submit</Button>
 						</Form>
 					</Col>
 				</Row>

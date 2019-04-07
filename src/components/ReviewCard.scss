@@ -1,6 +1,26 @@
 .reviewCard{
-    background-color: #f3dfc1;
-    border: 2px solid #ddbea8;
     padding: 10px;
-    border-radius: 25px;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+    border-radius: 2px;
 }
+
+.reviewIcon{
+  display: block;
+  float: left;
+  height: 90px;
+  width: 90px;
+  text-align: center;
+  font-size: 45px;
+}
+
+// .reviewDate{
+//     background-color: red;
+// }
+
+// .reviewTitle{
+//     background-color: red;
+// }
+
+// .reviewText{
+//     background-color: red;
+// }

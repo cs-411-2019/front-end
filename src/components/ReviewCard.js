@@ -1,24 +1,29 @@
 import React, { Component } from 'react'
-import { Feed, Icon } from 'semantic-ui-react'
+import { Feed, Icon, Item, Image } from 'semantic-ui-react'
 import './ReviewCard.scss'
 
-
 class ReviewCard extends Component {
+  
   render() {
     return(
-      <Feed className="reviewCard">
-        <Feed.Event>
-          <Feed.Label>
-              <Icon name={this.props.icon} />
-          </Feed.Label>
-          <Feed.Content>
-            <Feed.Date content={this.props.date} />
-            <Feed.Summary content={this.props.title} />
-            <Feed.Extra text content={this.props.review} />
-          </Feed.Content>
-        </Feed.Event>
-      </Feed>
+    <Item.Group className="reviewCard">
+    <Item>
+      <Icon name={this.props.icon}  className="reviewIcon" />
+     
+      <Item.Content>
+        <Item.Header className="reviewTitle">{this.props.title}</Item.Header>
+        <Item.Meta>
+          <span className="reviewDate">{this.props.date} </span>
+        </Item.Meta>
+        <Item.Description className="reviewText">
+            {this.props.review}
+        </Item.Description>
+      </Item.Content>
+    </Item>
+    </Item.Group>
     )
   }
 }
 export default ReviewCard;
+
+
