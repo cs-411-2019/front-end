@@ -4,7 +4,7 @@ import { Link } from 'react-website'
 import Navigation from '../components/Navigation'
 import Footer from '../components/Footer'
 
-import './App.css'
+import './App.scss'
 
 export default ({ children }) => (
   <div>

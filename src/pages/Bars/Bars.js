@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import ReviewFeed from '../../components/ReviewFeed'
+import ReviewCard from '../../components/ReviewCard'
 import {Container, Row, Col } from 'reactstrap'
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 
@@ -29,7 +29,7 @@ import './Bars.css'
 				<Row>
 					<Col xs="12" lg="12">
 						<h3>Your Bar Reviews</h3>
-						<ReviewFeed 
+						<ReviewCard 
 							icon='glass martini'
 							date='Nov 25'
 							title='You Visited '

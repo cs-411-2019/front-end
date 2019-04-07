@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {Container, Row, Col } from 'reactstrap'
 import { Button } from 'semantic-ui-react'
 import StatTile from '../../components/StatTile'
-import ReviewFeed from '../../components/ReviewFeed'
+import ReviewCard from '../../components/ReviewCard'
 import Map from '../../components/Map'
 import './Home.css'
 
@@ -51,7 +51,7 @@ export default class Home extends Component {
 				<Row>
 					<Col xs="12" lg="8">
 						<h3>History</h3>
-						<ReviewFeed 
+						<ReviewCard 
 							icon='beer'
 							date='Nov 25'
 							title='You Reviewed Bud light'

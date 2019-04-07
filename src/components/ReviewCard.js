@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import { Feed, Icon } from 'semantic-ui-react'
+import './ReviewCard.scss'
 
-class ReviewFeed extends Component {
+
+class ReviewCard extends Component {
   render() {
     return(
-      <Feed>
+      <Feed className="reviewCard">
         <Feed.Event>
           <Feed.Label>
               <Icon name={this.props.icon} />
@@ -19,4 +21,4 @@ class ReviewFeed extends Component {
     )
   }
 }
-export default ReviewFeed;
+export default ReviewCard;
