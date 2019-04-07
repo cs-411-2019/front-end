@@ -44,13 +44,22 @@ import './Reviews.css'
 				</Row>
 
 				<Row>
-					<Col xs="12" lg="12">
-						<h3>Your Reviews</h3>
+					<Col xs="12" lg="6">
+						<h3>Your Beer Reviews</h3>
 						<ReviewFeed 
 							icon='beer'
 							date='Nov 25'
 							title='You Reviewed Bud light'
 							review='Tasted like water, except worse'
+						/>
+					</Col>
+					<Col xs="12" lg="6">
+						<h3>Your Bar/Brewery Reviews</h3>
+						<ReviewFeed 
+							icon='glass martini'
+							date='Nov 25'
+							title='You Reviewed Bud light'
+							review='Just a little bar review'
 						/>
 					</Col>
 				</Row>
