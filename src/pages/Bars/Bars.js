@@ -1,14 +1,42 @@
 import React, { Component } from 'react'
-import ReviewFeed from '../../components/ReviewFeed'
+import ReviewCard from '../../components/ReviewCard'
 import {Container, Row, Col } from 'reactstrap'
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 
 
 import './Bars.css'
-
-
+const DF_API_KEY = process.env.DF_API_KEY;
+const DF_URL = process.env.DF_URL;
+const userId = 2;
 
  class Bars extends Component {
+
+	constructor(props){
+		super(props);
+		this.state = {
+			reviewType: 'beer',
+			isLoaded: false,
+			userBarReviews: [],
+			beers: []
+		}
+	}
+
+	getUsersBarReviews(){
+		return fetch(`${DF_URL}/api/v2/csf441-df/_proc/usp_BarReviewReadAllByUser(${userId})`, {
+			method: 'GET',
+			headers: {
+			'Accept': 'application/json',
+			'Content-Type': 'application/json',
+			'X-DreamFactory-API-Key': DF_API_KEY,
+			}
+		})
+	}
+
+	componentDidMount(){
+		this.getUsersBarReviews().then(res => res.json())
+		.then(data => this.setState({ userBarReviews: data }));
+	}
+
 	render() {
 		return (
 			<Container>
@@ -18,7 +46,7 @@ import './Bars.css'
 						<Form>
 							<FormGroup>
 								<Label for="review">Search for a Bar/Brewery</Label>
-								<Input type="textarea" name="text" id="review"/>
+								<Input type="text" name="text" id="review"/>
 							</FormGroup>
 							{/* TODO, Create Beer seach */}
 							<Button>Submit</Button>
@@ -29,12 +57,17 @@ import './Bars.css'
 				<Row>
 					<Col xs="12" lg="12">
 						<h3>Your Bar Reviews</h3>
-						<ReviewFeed 
-							icon='glass martini'
-							date='Nov 25'
-							title='You Visited '
-							review='Nice drinks, friendly people. Would come again!'
-						/>
+						{
+							this.state.userBarReviews.map(bar => 
+								<ReviewCard 
+									key={bar.Name}
+									icon='glass martini'
+									date={bar.Time}
+									title={bar.Name}
+									review={bar.Text}
+								/>
+							)
+						}
 					</Col>
 				</Row>
 			</Container>

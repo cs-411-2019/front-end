@@ -4,3 +4,4 @@
 require('bootstrap/dist/css/bootstrap.min.css');
 require('@babel/polyfill');
 require('./render');
+require('dotenv').config();
