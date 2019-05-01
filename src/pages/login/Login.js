@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import ReviewCard from '../../components/ReviewCard'
 import {Container, Row, Col } from 'reactstrap'
 import { Button, Form, FormGroup, Label, Input, FormText, FormControl, ControlLabel } from 'reactstrap';
+import './Login.scss'
 
 const DF_API_KEY = process.env.DF_API_KEY;
 const DF_URL = process.env.DF_URL;
