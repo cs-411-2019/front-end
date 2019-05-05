@@ -4,7 +4,7 @@ import { Button } from 'semantic-ui-react'
 import StatTile from '../../components/StatTile'
 import ReviewCard from '../../components/ReviewCard'
 import Map from '../../components/Map'
-import './Home.css'
+import './Home.scss'
 
 
 
@@ -22,29 +22,29 @@ export default class Home extends Component {
 					/>
 					</Col>
 					<Col xs="12" lg="4">
-						<h3>Card List</h3>
+						<h3>Your Stats</h3>
 						<StatTile 
-							style={ {backgroundColor: '#333', borderColor: '#333' }}
 							stat={0} 
 							text = "Beers tried"
 							icon="fas fa-beer"
 							link="/beers"
+							id="beers-tried"
 						/>
 
 						<StatTile 
-							style={ {backgroundColor: '#333', borderColor: '#333' }}
 							stat={10}
 							text = "Bars Visited"
 							icon="fas fa-store-alt"
-							link="/beers"
+							link="/bars"
+							id="bars-visited"
 						/>
 
 						<StatTile 
-							style={ {backgroundColor: '#333', borderColor: '#333' }}
 							stat={10}
 							text = "Friends"
 							icon="fas fa-users"
-							link="/beers"
+							id="friends"
+							link="/buddies"
 						/>
 					</Col>
 				</Row>

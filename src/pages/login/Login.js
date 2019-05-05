@@ -55,13 +55,6 @@ class Login extends Component {
               window.location.replace("/home");
             }
           });
-
-
-        // localStorage.setItem('userId', data);
-
-        // login
-
-        // http://sp19-cs411-23.cs.illinois.edu:8080/api/v2/csf441-df/_proc/usp_Login(Nate,%20test)
       }
     
 
