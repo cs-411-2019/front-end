@@ -2,12 +2,10 @@ import React, { Component } from 'react'
 import ReviewCard from '../../components/ReviewCard'
 import {Container, Row, Col } from 'reactstrap'
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import {DF_API_KEY, DF_URL} from '../../index'
 
 
 import './Bars.css'
-const DF_API_KEY = process.env.DF_API_KEY;
-const DF_URL = process.env.DF_URL;
-const userId = 2;
 
  class Bars extends Component {
 
@@ -22,7 +20,7 @@ const userId = 2;
 	}
 
 	getUsersBarReviews(){
-		return fetch(`${DF_URL}/api/v2/csf441-df/_proc/usp_BarReviewReadAllByUser(${userId})`, {
+		return fetch(`${DF_URL}/api/v2/csf441-df/_proc/usp_BarReviewReadAllByUser(${localStorage.getItem('userId')})`, {
 			method: 'GET',
 			headers: {
 			'Accept': 'application/json',
