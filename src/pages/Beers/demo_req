@@ -1,0 +1,25 @@
+Due: Sunday of week 16
+
+In stage 5, the final stage, each group must do the following:
+
+Record a final demo video that demonstrates the application. The demo video should be somewhere in the range of 10 to 20 minutes. Read the final demo requirements section below to understand what functionality is expected from your application.
+The final demo video should be uploaded to Illinois Media Space at https://mediaspace.illinois.edu by the team captain. After the video is uploaded to Media Space, there will be a shareable link to the video. For details on how to upload videos to Media Space, refer to the project template.
+Insert the video link in the Final Demo Video Link field on the project template.
+Pack all your project files in a zip archive, upload the archive to one of the file hosting services (e.g. Dropbox, Box, Github), and add the link to Project Files field on the project template. All project teams are required to share the repository with All TAs.
+Rename the project template to "TeamName CS 411 Project".
+Make sure all links in the document work.
+Submit the project file of your team to Coursera.
+Final Demo Video Requirements:
+Introduce your group's project and walk your audience through its goals and features. (We don't expect a professional movie from you, Just record a quick and funny screen-cast with your narration.)
+Basic Functions:
+Show how to insert/update/delete records to the database (repeat from the Initial Demo)
+Show how to search the database and list or print returned results. You need to show a few different interesting queries over your database. One of the queries must involve join of multiple (at least 2) tables.
+Demonstrate that the database has at least 50,000 records. The data can be downloaded as a precompiled dataset from websites like Kaggle or scraped from websites using your own script.
+Demo Two Advanced Functions: Give a brief overview of your advanced functions and their link with your project. You have to be able to clearly define the technical challenge in advanced functions and articulate it during the presentation.
+Explain the Advanced Techniques used in the project and show the relevant code that implements each technique: Use 5 or more advanced techniques from the list below:
+1.Indexing	7. Stored procedure
+2. Parallel query execution	8. Prepared Statements
+3. Transaction	9. Compound Statements
+4. Approximate query processing	10. Constraint
+5. Triggers	11. View
+6. Partitioning\Sharding	

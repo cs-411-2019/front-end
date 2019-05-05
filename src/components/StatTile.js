@@ -23,6 +23,8 @@ class StatTile extends Component {
             {this.props.stat} {this.props.text} 
             </CardTitle>
 
+            <CardText>{this.props.stat2} {this.props.text2}</CardText>
+          
             <a href={this.props.link} style={{color:'white'}} className="small-box-footer stat-link">
                 More info <i className="fa fa-arrow-circle-right"></i>
             </a>

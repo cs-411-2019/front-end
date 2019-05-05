@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
-import GoogleMapReact from 'google-map-react';  
-  const AnyReactComponent = ({ text }) => <div>{text}</div>;
+import GoogleMapReact from 'google-map-react'; 
+import {Popup, Icon} from 'semantic-ui-react' 
+  const Marker = ({ text }) => (
+    <Popup
+      trigger={<Icon disabled name='map marker' size='huge'/>}
+      content={text}
+      basic
+    />
+  );
   const mapAPIKey = process.env.MAPS_API_KEY;
 
   class Map extends Component {
@@ -15,17 +22,26 @@ import GoogleMapReact from 'google-map-react';
     render() {
       return (
         // Important! Always set the container height explicitly
-        <div style={{ height: '100vh', width: '100%' }}>
+        <div style={{ height: '100%', width: '100%' }}>
           <GoogleMapReact
             bootstrapURLKeys={{ key: mapAPIKey }}
             defaultCenter={this.props.center}
             defaultZoom={this.props.zoom}
           >
-            <AnyReactComponent
-              lat={59.955413}
-              lng={30.337844}
-              text="My Marker"
-            />
+           
+          <Marker
+            lat={this.props.center.lat}
+            lng={this.props.center.lng}
+            text={"You"}
+          />
+        
+             {this.props.bars.map(bar => (
+                <Marker
+                lat={bar.lat}
+                lng={bar.lng}
+                text={bar.name}
+              />
+            ))}
           </GoogleMapReact>
         </div>
       );
