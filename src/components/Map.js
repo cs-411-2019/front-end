@@ -37,9 +37,10 @@ import {Popup, Icon} from 'semantic-ui-react'
         
              {this.props.bars.map(bar => (
                 <Marker
-                lat={bar.lat}
-                lng={bar.lng}
-                text={bar.name}
+                lat={bar.Lat}
+                lng={bar.Long}
+                text={bar.Name}
+                key={bar.Name}
               />
             ))}
           </GoogleMapReact>

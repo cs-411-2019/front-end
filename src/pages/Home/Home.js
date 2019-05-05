@@ -22,6 +22,7 @@ export default class Home extends Component {
 
 		this.state = {
 			stats: [],
+			bars: [],
 			userLocation: {},
 			loading: true
 		};
@@ -40,18 +41,32 @@ export default class Home extends Component {
 	   })
    }
 
+   getBarsNearby(lat, long, radius){
+	return fetch(`${DF_URL}/api/v2/csf441-df/_proc/usp_BarsNearby(${lat}, ${long}, ${radius})`, {
+		method: 'GET',
+		headers: {
+		  'Accept': 'application/json',
+		  'Content-Type': 'application/json',
+		  'X-DreamFactory-API-Key': DF_API_KEY,
+		}
+	  })
+   }
+
 	componentDidMount(){
 
 		navigator.geolocation.getCurrentPosition(
 			position => {
-			  const { latitude, longitude } = position.coords;
-			  console.log(latitude);
-			  console.log(longitude);
-	  
+			  const { latitude, longitude } = position.coords;	  
 			  this.setState({
 				userLocation: { lat: latitude, lng: longitude },
 				loading: false
 			  });
+
+			  this.getBarsNearby(latitude, longitude, 20).then(res => res.json())
+			  .then(data => {
+				this.setState({ bars: data })
+				});
+
 			},
 			() => {
 			  this.setState({ loading: false });
@@ -60,14 +75,12 @@ export default class Home extends Component {
 
 		this.getUsersStats().then(res => res.json())
 		.then(data => {
-			console.log(data);
 			this.setState({ stats: data[0] })
-			});
+		});
 	}
 
 
 	render() {
-		const { value, set } = this.props
 		return (
 			<Container>
 				<Row>
@@ -80,7 +93,7 @@ export default class Home extends Component {
 								mapElement={<div style={{ height: `100%` }} />}
 								center={this.state.userLocation}
 								zoom={13}
-								bars={bar}
+								bars={this.state.bars}
 							/>
 						</When>
 						<Otherwise>
