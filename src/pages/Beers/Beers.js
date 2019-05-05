@@ -24,7 +24,7 @@ class Beers extends Component {
 	}
 
 	getUsersBeerReviews(){
-		   return fetch(`${DF_URL}/api/v2/csf441-df/_proc/usp_BeerReviewReadAllByUser(${userId})`, {
+		   return fetch(`${DF_URL}/api/v2/csf441-df/_proc/usp_BeerReviewReadAllByUser(${localStorage.getItem('userId')})`, {
 			method: 'GET',
 			headers: {
 			  'Accept': 'application/json',
