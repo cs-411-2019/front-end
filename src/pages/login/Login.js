@@ -11,15 +11,21 @@ const userId = 2;
 class Login extends Component {
     constructor(props) {
         super(props);
-    
+
         this.state = {
-          userEmail: "",
+          userName: "",
           userPassword: ""
         };
       }
 
+      componentWillMount(){
+        if(localStorage.getItem('userId')){
+          window.location.replace("/home");
+        }
+      }
+
       validateForm() {
-        return this.state.userEmail.length > 0 && this.state.userPassword.length > 0;
+        return this.state.userName.length > 0 && this.state.userPassword.length > 0;
       }
     
       handleChange = event => {
@@ -28,8 +34,34 @@ class Login extends Component {
         });
       }
 
+      login(){
+        return fetch(`${DF_URL}/api/v2/csf441-df/_proc/usp_Login(${this.state.userName}, ${this.state.userPassword})`, {
+          method: 'GET',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'X-DreamFactory-API-Key': DF_API_KEY,
+          }
+          })
+        }
+
       handleSubmit = event => {
         event.preventDefault();
+
+        this.login().then(res => res.json())
+        .then(data => {
+            if(data[0].UserId){
+              localStorage.setItem('userId', data[0].UserId );
+              window.location.replace("/home");
+            }
+          });
+
+
+        // localStorage.setItem('userId', data);
+
+        // login
+
+        // http://sp19-cs411-23.cs.illinois.edu:8080/api/v2/csf441-df/_proc/usp_Login(Nate,%20test)
       }
     
 
@@ -39,11 +71,11 @@ class Login extends Component {
                 <div className="Login">
                     <Form onSubmit={this.handleSubmit}>
                     <FormGroup >
-                        <Label for="userEmail">Email</Label>
+                        <Label for="userName">UserName</Label>
                         <Input 
-                            type="email" 
-                            name="email" 
-                            id="userEmail" 
+                            type="input" 
+                            name="userName" 
+                            id="userName" 
                             autoFocus 
                             value={this.state.userEmail} 
                             onChange={this.handleChange}

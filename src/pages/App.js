@@ -10,16 +10,20 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    // this.state = {
-    //   userEmail: "",
-    //   userPassword: ""
-    // };
+    this.state = {
+      userId: "",
+      userPassword: ""
+    };
   }
 
   render(){
     return(
       <div>
-      <Navigation />
+        <Choose>
+      <When condition={localStorage.getItem('userId')}>
+        <Navigation />
+      </When>
+      </Choose>
       <div className="container">
         <div>
           <section className="main-content">
