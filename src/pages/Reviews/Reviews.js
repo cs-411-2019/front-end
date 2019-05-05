@@ -34,55 +34,6 @@ const DF_URL = process.env.DF_URL;
 		console.log(event);
 		event.preventDefault();
 	}
-
-	
-	
-	  /*	getContactData: function() {
-			 var url = this.props.url;
-		 var key = this.props.apikey;
-		 var contactId = this.props.contactId;
-		 var token = localStorage.getItem('session_token');
-	 
-		  var params = '?ids=' + contactId;
-	 
-		   $.ajax({
-				 dataType: 'json',
-				 contentType: 'application/json; charset=utf-8',
-				 url: url + '/api/v2/db/_table/contact' + params,
-				 data: null,
-				 cache:false,
-				 method:'GET',
-				 headers: {
-					 "X-DreamFactory-API-Key": key,
-					 "X-DreamFactory-Session-Token": token
-				 },
-				 success:function (response) {
-					 if (response.hasOwnProperty('resource')) {
-						 this.setState({id: response.resource[0].id});
-						 this.setState({firstName: response.resource[0].first_name});
-						 this.setState({lastName: response.resource[0].last_name});
-						 this.setState({notes: response.resource[0].notes});
-						 this.setState({twitter: response.resource[0].twitter});
-						 this.setState({skype: response.resource[0].skype});
-	 
-						 this.getContactInfoData()
-					 }
-					 else
-						 console.log(response);
-				 }.bind(this),
-				 error: function(response) {
-					 this.setState({
-						 modalContent: {
-							 headline: response.statusText,
-							 body: response.responseJSON.error.message,
-							 extended: response.responseText
-						 }
-					 })
-					 
-					 this.openModal();
-				 }.bind(this)
-			 });
-	}, */
 	
 	  saveBeerReview(event){
 		fetch(`${DF_URL}`, {
