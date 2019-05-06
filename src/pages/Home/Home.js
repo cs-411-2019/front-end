@@ -21,6 +21,7 @@ export default class Home extends Component {
 		super(props);
 
 		this.state = {
+			suggestion: [],
 			stats: [],
 			bars: [],
 			userLocation: {},
@@ -28,7 +29,16 @@ export default class Home extends Component {
 		};
 	}
 
-	
+	getSuggestion(){
+		return fetch(`${DF_URL}/api/v2/csf441-df/_proc/usp_FindFriendsBarAndBeerRecommendation(${localStorage.getItem('userId')})`, {
+			method: 'GET',
+			headers: {
+			  'Accept': 'application/json',
+			  'Content-Type': 'application/json',
+			  'X-DreamFactory-API-Key': DF_API_KEY,
+			}
+		  })
+	}
 
 	getUsersStats(){
 		return fetch(`${DF_URL}/api/v2/csf441-df/_proc/usp_UserStats(${localStorage.getItem('userId')})`, {
@@ -76,6 +86,13 @@ export default class Home extends Component {
 		this.getUsersStats().then(res => res.json())
 		.then(data => {
 			this.setState({ stats: data[0] })
+		});
+
+
+		this.getSuggestion().then(res => res.json())
+		.then(data => {
+			console.log(data)
+			this.setState({ suggestion: _.uniqBy(data, 'BeerId') })
 		});
 	}
 
@@ -144,24 +161,20 @@ export default class Home extends Component {
 					</Col>
 				</Row>
 				<Row>
-					<Col xs="12" lg="8">
-						<h3>History</h3>
-						<ReviewCard 
-							icon='beer'
-							date='Nov 25'
-							title='You Reviewed Bud light'
-							review='Tasted like water, except worse'
-						/>
-					</Col>
-					<Col xs="12" lg="4">
-					<h3>Recommended</h3>
-					<StatTile 
-							style={ {backgroundColor: '#333', borderColor: '#333' }}
-							stat={0} 
-							text = "Recommended Beer"
-							icon="fas fa-beer"
-							link="/beers"
-						/>
+					<Col xs="12" lg="12">
+					<h3>Recommended</h3>	
+							{
+							this.state.suggestion.map(beer => 
+								<StatTile 
+									key={beer.Name}
+									style={ {backgroundColor: '#333', borderColor: '#333' }}
+									text ={`${beer.BeerName} by ${beer.BrewerName}`}
+									text2 ={`Available at ${beer.BarName}`}
+									icon="fas fa-beer"
+									link="/beers"
+								/>
+							)
+						}
 					</Col>
 				</Row>
 			</Container>

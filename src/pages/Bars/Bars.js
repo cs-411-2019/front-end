@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import ReviewCard from '../../components/ReviewCard'
+import BarCard from '../../components/BarCard'
 import {Container, Row, Col } from 'reactstrap'
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import {DF_API_KEY, DF_URL} from '../../index'
+import _ from 'lodash'
 
 
 import './Bars.css'
@@ -12,57 +14,89 @@ import './Bars.css'
 	constructor(props){
 		super(props);
 		this.state = {
-			reviewType: 'beer',
-			isLoaded: false,
-			userBarReviews: [],
-			beers: []
+			barSearch: "",
+			userBars: [],
+			bars: []
 		}
 	}
 
-	getUsersBarReviews(){
-		return fetch(`${DF_URL}/api/v2/csf441-df/_proc/usp_BarReviewReadAllByUser(${localStorage.getItem('userId')})`, {
-			method: 'GET',
-			headers: {
-			'Accept': 'application/json',
-			'Content-Type': 'application/json',
-			'X-DreamFactory-API-Key': DF_API_KEY,
-			}
+	handleChange = (e) => {
+		this.setState({
+			[e.target.name]: e.target.value
 		})
 	}
 
-	componentDidMount(){
-		this.getUsersBarReviews().then(res => res.json())
-		.then(data => this.setState({ userBarReviews: data }));
-	}
+	findBars(event){
+		event.preventDefault();
+		fetch(`${DF_URL}/api/v2/csf441-df/_proc/usp_FindBars(${this.state.barSearch})`, {
+			method: 'GET',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+				'X-DreamFactory-API-Key': DF_API_KEY,
+			}
+		}).then(res => res.json())
+		.then(data => {
+			console.log(data);
+			this.setState({bars : _.uniqBy(data, 'Name')})
+		}); 
+		
+  }
 
 	render() {
 		return (
 			<Container>
 				<Row>
 					<Col xs="12" lg="13">
-						<h3>Bars form</h3>
-						<Form>
+						<Form onSubmit={this.findBars.bind(this)}>
 							<FormGroup>
 								<Label for="review">Search for a Bar/Brewery</Label>
-								<Input type="text" name="text" id="review"/>
+								<Input type="text" name="barSearch" id="barSearch" onChange={this.handleChange.bind(this)}/>
 							</FormGroup>
-							{/* TODO, Create Beer seach */}
-							<Button>Submit</Button>
+							<Button>Search Bars</Button>
 						</Form>
 					</Col>
 				</Row>
 
 				<Row>
 					<Col xs="12" lg="12">
-						<h3>Your Bar Reviews</h3>
 						{
-							this.state.userBarReviews.map(bar => 
-								<ReviewCard 
+							this.state.bars.map(bar => 
+								<BarCard 
 									key={bar.Name}
+									barId={bar.BarId}
+									phone={bar.phone}
 									icon='glass martini'
 									date={bar.Time}
 									title={bar.Name}
-									review={bar.Text}
+									address={bar.Address}
+									city={bar.City}
+									state={bar.State}
+									zip={bar.PostalCode}
+									website={bar.Website}
+								/>
+							)
+						}
+					</Col>
+				</Row>
+				<hr />
+				<Row>
+					<Col xs="12" lg="12">
+						<h3>Your Bars</h3>
+						{
+							this.state.userBars.map(bar => 
+								<BarCard 
+									key={bar.Name}
+									barId={bar.BarId}
+									phone={bar.phone}
+									icon='glass martini'
+									date={bar.Time}
+									title={bar.Name}
+									address={bar.Address}
+									city={bar.City}
+									state={bar.State}
+									zip={bar.PostalCode}
+									website={bar.Website}
 								/>
 							)
 						}
@@ -72,5 +106,6 @@ import './Bars.css'
 		)
 	}
 }
+
 
 export default Bars;
