@@ -2,132 +2,97 @@ import React, { Component } from 'react'
 import ReviewCard from '../../components/ReviewCard'
 import {Container, Row, Col } from 'reactstrap'
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
-
+import { Accordion, Icon } from 'semantic-ui-react'
+import {DF_API_KEY, DF_URL} from '../../index'
 
 import './Reviews.css'
 
-const DF_API_KEY = process.env.DF_API_KEY;
-const DF_URL = process.env.DF_URL;
 
  class Reviews extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			reviewType: 'beer',
-			isLoaded: false,
-			beerReviews: [],
-			barReviews: []
+			usersBeerReviews: [],
+			userBarReviews: [],
 		}
 	}
 
-	reviewForm(event) {
-		this.setState({reviewType: event.target.value})
-	}
 
-	submitReview(event){
-		if(this.state.reviewType === 'beer'){
-			saveBeerReview();
-		} else {
-		//	saveBarReview();
-		console.log("Bar Review");
-		}
-		console.log(event);
-		event.preventDefault();
-	}
-	
-	  saveBeerReview(event){
-		fetch(`${DF_URL}`, {
-		  method: 'POST',
-		  headers: {
-			'Accept': 'application/json',
-			'Content-Type': 'application/json',
-			"X-DreamFactory-API-Key": DF_API_KEY,
-		  },
-		  body: JSON.stringify({
-			firstParam: 'yourValue',
-			secondParam: 'yourOtherValue',
-		  })
-		})
-	  }
+	getUsersBeerReviews(){
+		return fetch(`${DF_URL}/api/v2/csf441-df/_proc/usp_BeerReviewReadAllByUser(${localStorage.getItem('userId')})`, {
+		 method: 'GET',
+		 headers: {
+		   'Accept': 'application/json',
+		   'Content-Type': 'application/json',
+		   'X-DreamFactory-API-Key': DF_API_KEY,
+		 }
+	   })
+   }
+
+   getUsersBarReviews(){
+	return fetch(`${DF_URL}/api/v2/csf441-df/_proc/usp_BarReviewReadAllByUser(${localStorage.getItem('userId')})`, {
+	 method: 'GET',
+	 headers: {
+	   'Accept': 'application/json',
+	   'Content-Type': 'application/json',
+	   'X-DreamFactory-API-Key': DF_API_KEY,
+	 }
+   })
+}
+
+   componentDidMount(){
+	this.getUsersBeerReviews().then(res => res.json())
+	.then(data => {
+		this.setState({ usersBeerReviews: data })
+	});
+
+	this.getUsersBarReviews().then(res => res.json())
+	.then(data => {
+		this.setState({ userBarReviews: data })
+	});
+}
 
 	render() {
-	
 		return (
-			<Container>
-				<Row>
-					<Col xs="12" lg="13">
-						<h3>Review form</h3>
-						<Form onSubmit={this.submitReview}>
-							<FormGroup>
-								<Label for="reviewType">Review Type</Label>
-								<Input type="select" name="select" id="reviewType" onChange={this.reviewForm.bind(this)}>
-									<option value="beer">Beer</option>
-									<option value="bar-brewery">Bar/Brewery</option>
-								</Input>
-							</FormGroup>
-
-							<Choose>
-								<When condition={this.state.reviewType === 'beer'}>
-								<FormGroup>
-									<Label for="appearance">Appearance</Label>
-									<Input type="text" name="appearance" id="appearance" placeholder="Appearance"/>
-								</FormGroup>
-								<FormGroup>
-									<Label for="taste">Taste</Label>
-									<Input type="text" name="taste" id="taste" placeholder="Taste"/>
-								</FormGroup>
-								<FormGroup>
-									<Label for="palate">Palate</Label>
-									<Input type="text" name="palate" id="appearance" placeholder="Palate"/>
-								</FormGroup>
-								<FormGroup>
-									<Label for="aroma">Aroma</Label>
-									<Input type="text" name="aroma" id="aroma" placeholder="Aroma"/>
-								</FormGroup>
-								</When>
-							</Choose>
-
-							<FormGroup>
-								<Label for="review">Review</Label>
-								<Input type="textarea" name="text" id="review" />
-							</FormGroup>
-
-							<FormGroup>
-								<Label for="overall">Overall</Label>
-								<Input type="select" name="overall" id="overall">
-									<option value="1">1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
-									<option value="4">4</option>
-									<option value="5">5</option>
-								</Input>
-							</FormGroup>
-
-							{/* TODO, add properties based upon with review type is selected */}
-							<h3>{this.state.reviewType}</h3>
-							<Button >Submit</Button>
-						</Form>
-					</Col>
-				</Row>
-
+			<Container>			
 				<Row>
 					<Col xs="12" lg="6">
 						<h3>Your Beer Reviews</h3>
-						<ReviewCard 
-							icon='beer'
-							date='Nov 25'
-							title='You Reviewed Bud light'
-							review='Tasted like water, except worse'
-						/>
+						{
+						this.state.usersBeerReviews.map(beer => 
+							<ReviewCard 
+								key={beer.Name}
+								icon='beer'
+								date={beer.Time}
+								title={beer.Name}
+								review={beer.Text}
+								rating={beer.Overall}
+								beerProp={{
+									appearance: beer.Appearance,
+									aroma: beer.Aroma,
+									palate: beer.Palate,
+									taste: beer.Taste
+								}}
+								isBeer
+							/>
+						)
+					}
 					</Col>
 					<Col xs="12" lg="6">
 						<h3>Your Bar/Brewery Reviews</h3>
-						<ReviewCard 
-							icon='glass martini'
-							date='Nov 25'
-							title='You Reviewed Bud light'
-							review='Just a little bar review'
-						/>
+						{
+							this.state.userBarReviews.map(bar => 
+								<ReviewCard 
+									key={bar.BarReviewId}
+									icon='glass martini'
+									date={bar.Time}
+									title={bar.Name}
+									review={bar.Text}
+									rating={bar.Overall}
+									isBeer={false}
+								/>
+							)
+						}
 					</Col>
 				</Row>
 			</Container>

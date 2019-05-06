@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import ReviewCard from '../../components/ReviewCard'
 import BeerCard from '../../components/BeerCard'
+import UserBeerCard from '../../components/UserBeerCard'
 import {Container, Row, Col } from 'reactstrap'
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import _ from 'lodash';
@@ -18,21 +19,10 @@ class Beers extends Component {
 			reviewType: 'beer',
 			isLoaded: false,
 			beerSearch: "",
-			usersBeerReviews: [],
-			beers: []
+			userBeers: [],
+			beers: [],
 		};
 	}
-
-	getUsersBeerReviews(){
-		   return fetch(`${DF_URL}/api/v2/csf441-df/_proc/usp_BeerReviewReadAllByUser(${localStorage.getItem('userId')})`, {
-			method: 'GET',
-			headers: {
-			  'Accept': 'application/json',
-			  'Content-Type': 'application/json',
-			  'X-DreamFactory-API-Key': DF_API_KEY,
-			}
-		  })
-	  }
 
 	  beerForm(event){
 			this.setState({
@@ -42,7 +32,6 @@ class Beers extends Component {
 
 	  findBeers(event){
 			event.preventDefault();
-
 			fetch(`${DF_URL}/api/v2/csf441-df/_proc/usp_FindBeer(${this.state.beerSearch})`, {
 				method: 'GET',
 				headers: {
@@ -57,18 +46,29 @@ class Beers extends Component {
 			
 	  }
 
-	componentDidMount(){
-		this.getUsersBeerReviews().then(res => res.json())
-		.then(data => this.setState({ usersBeerReviews: data }));
-	}
+	  userBeers(){
+		fetch(`${DF_URL}/api/v2/csf441-df/_proc/usp_DrinksReadAll(${localStorage.getItem('userId')})`, {
+			method: 'GET',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+				'X-DreamFactory-API-Key': DF_API_KEY,
+			}
+		}).then(res => res.json())
+		.then(data => {
+			this.setState({userBeers : _.uniqBy(data, 'Name')})
+		}); 
+  }
 
+  componentDidMount(){
+	  this.userBeers();
+  }
+	  
 	render() {
 		return (
 			<Container>
-			
 				<Row>
 					<Col xs="12" lg="12">
-						<h3>Beer form</h3>
 						<Form onSubmit={this.findBeers.bind(this)}>
 							<FormGroup>
 								<Label for="beerSearch">Search for a Beer</Label>
@@ -81,7 +81,6 @@ class Beers extends Component {
 
 				<Row>
 					<Col xs="12" lg="12">
-						<h3>Your Beers</h3>
 						{
 							this.state.beers.map(beer => 
 								<BeerCard 
@@ -100,17 +99,19 @@ class Beers extends Component {
 
 				<Row>
 					<Col xs="12" lg="12">
-					{
-						this.state.usersBeerReviews.map(beer => 
-							<ReviewCard 
-								key={beer.Name}
-								icon='beer'
-								date={beer.Time}
-								title={beer.Name}
-								review={beer.Text}
-							/>
-						)
-					}
+						<h3>Your Beers</h3>
+						{
+							this.state.userBeers.map(beer => 
+								<UserBeerCard 
+									key={beer.Name}
+									beerId={beer.BeerTypeId}
+									icon='beer'
+									name={beer.Name}
+									time={beer.Time}
+								/>
+							)
+						}
+						
 					</Col>
 				</Row>
 			</Container>

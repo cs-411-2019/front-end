@@ -5,7 +5,7 @@ import _ from 'lodash';
 import {DF_API_KEY, DF_URL} from '../index'
 
 
-const beerImage = [
+const barImage = [
   "https://www.capemaybrewery.com/wp-content/uploads/2017/01/nonic-pale.jpg",
   "https://morebeer-web-8-pavinthewaysoftw.netdna-ssl.com/product_image/morebeer/500x500/27498.png",
   "https://morebeer-web-8-pavinthewaysoftw.netdna-ssl.com/product_image/morebeer/500x500/29067.png",
@@ -19,7 +19,7 @@ const beerImage = [
 ]
 
 
-class BeerCard extends Component {
+class BarCard extends Component {
   constructor(props){
 		super(props);
 		this.state = {
@@ -32,14 +32,10 @@ class BeerCard extends Component {
       overall: 1
 		}
   }
-  
-  handleChange = (e) => {
-      this.setState({
-          [e.target.name]: e.target.value
-      })
-  }
 
-  handleRate(event){
+
+  submitBarReview(event){
+    
     fetch(`${DF_URL}/api/v2/csf441-df/_proc/usp_FavoriteBeersCreate(${localStorage.getItem('userId')}, ${this.props.beerId})`, {
 			method: 'GET',
 			headers: {
@@ -48,39 +44,23 @@ class BeerCard extends Component {
 			  'X-DreamFactory-API-Key': DF_API_KEY,
 			}
 		  }).then(res => res.json()).then(date => {
+        console.log(data);
+        this.setState({ showReview: false })
       });
+  }
+  
+  handleChange = (e) => {
+      this.setState({
+          [e.target.name]: e.target.value
+      })
   }
 
   handeReview(){
     this.setState({ showReview: true })
   }
 
-  submitBeerReview(event){
-    event.preventDefault();
-    fetch(`${DF_URL}/api/v2/csf441-df/_proc/usp_BeerReviewsCreate(
-      ${localStorage.getItem('userId')}, 
-      ${this.props.beerId},
-      ${this.state.appearance},
-      ${this.state.aroma},
-      ${this.state.palate},
-      ${this.state.taste},
-      ${this.state.overall},
-      ${this.state.review}
-      )`, {
-			method: 'GET',
-			headers: {
-			  'Accept': 'application/json',
-			  'Content-Type': 'application/json',
-			  'X-DreamFactory-API-Key': DF_API_KEY,
-			}
-		  }).then(res => res.json()).then(data => {
-        console.log(data);
-       this.setState({ showReview: false })
-      });
-  }
-
   handleTried(){
-    fetch(`${DF_URL}/api/v2/csf441-df/_proc/usp_DrinksCreate(${localStorage.getItem('userId')}, ${this.props.beerId})`, {
+    fetch(`${DF_URL}/api/v2/csf441-df/_proc/usp_VisitedCreate(${localStorage.getItem('userId')}, ${this.props.barId})`, {
 			method: 'GET',
 			headers: {
 			  'Accept': 'application/json',
@@ -89,42 +69,33 @@ class BeerCard extends Component {
 			}
 		  }).then(res => res.json())
   }
+
+
+
   
   render() {
     return(
-    <Item.Group className="beerCard">
+    <Item.Group className="barCard">
     <Item>
-      <Item.Image size='tiny' src={beerImage[_.random(0, beerImage.length - 1)]} />
+      <Item.Image size='tiny' src={barImage[_.random(0, barImage.length - 1)]} />
       <Item.Content>
         <Item.Header className="reviewTitle">
-        {this.props.name}
+        {this.props.title}
         <Rating 
-          icon='heart' defaultRating={0} maxRating={1} 
-          onRate={this.handleRate.bind(this)} style={{fontSize: '30px'}}
+          icon='heart' defaultRating={0} maxRating={1}  style={{fontSize: '30px'}}
         />
         </Item.Header>
         <Item.Description className="reviewText">
-            {this.props.availability}
+            {this.props.phone}
+            <br />
+            {this.props.address}, {this.props.city} {this.props.state}, {this.props.zip}
+            <br />
+            <a href={this.props.website} targe="_blank">{this.props.website}</a>
 
             <Choose>
             <When condition={this.state.showReview}>
-            <Form onSubmit={this.submitBeerReview.bind(this)}>
-              <Form.Field>
-                <label>Appearance</label>
-                <input placeholder='Appearance' name="appearance" onChange={e => this.handleChange(e)}/>
-              </Form.Field>
-              <Form.Field>
-                <label>Taste</label>
-                <input placeholder='Taste' name="taste" onChange={e => this.handleChange(e)}/>
-              </Form.Field>
-              <Form.Field>
-                <label>Palate</label>
-                <input placeholder='Palate' name="palate" onChange={e => this.handleChange(e)}/>
-              </Form.Field>
-              <Form.Field>
-                <label>Aroma</label>
-                <input placeholder='Aroma' name="aroma" onChange={e => this.handleChange(e)} />
-              </Form.Field>
+            <Form onSubmit={this.submitBarReview.bind(this)}>
+            
               <Form.Field>
                 <label>Review</label>
                 <input placeholder='Review' name="review" onChange={e => this.handleChange(e)}/>
@@ -149,10 +120,10 @@ class BeerCard extends Component {
               <Icon name='write square' style={{margin:'5px'}}/>
             </Button>
           <Popup
-            content={<p>Awesome! Happy Drinking 🍻</p>}
+            content={<p>Hope you had a good time :D </p>}
             trigger={
               <Button primary floated='right' onClick={this.handleTried.bind(this)}>
-                I've tried this. 
+                I've visited here.
                 <Icon name='thumbs up outline' style={{margin:'5px'}}/>
               </Button>
             }
@@ -166,6 +137,6 @@ class BeerCard extends Component {
     )
   }
 }
-export default BeerCard;
+export default BarCard;
 
 
