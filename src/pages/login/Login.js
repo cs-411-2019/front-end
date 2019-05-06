@@ -60,7 +60,7 @@ class Login extends Component {
 
 	render() {
 		return (          
-			<Container>
+			<Container id="loginBody">
         <h1 style={{color: '#ffffff',  textAlign: 'center', textShadow: '2px 2px #8a8a8a5c', fontSize: '65px'}}>Drinking Buddies</h1>
                 <div className="Login">
                     <Form onSubmit={this.handleSubmit}>

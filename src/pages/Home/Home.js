@@ -92,7 +92,7 @@ export default class Home extends Component {
 		this.getSuggestion().then(res => res.json())
 		.then(data => {
 			console.log(data)
-			this.setState({ suggestion: _.uniqBy(data, 'BeerId') })
+			this.setState({ suggestion: _.reject(_.uniqBy(data, 'BeerId'), ['BeerName', null] )})
 		});
 	}
 
@@ -166,7 +166,7 @@ export default class Home extends Component {
 							{
 							this.state.suggestion.map(beer => 
 								<StatTile 
-									key={beer.Name}
+									key={beer.BeerName}
 									style={ {backgroundColor: '#333', borderColor: '#333' }}
 									text ={`${beer.BeerName} by ${beer.BrewerName}`}
 									text2 ={`Available at ${beer.BarName}`}
