@@ -9,7 +9,15 @@
     }
   }
 
-  // body {
-  //   background-image: url("../../static/login-background.jpg");
-  //   background-color: #cccccc;
-  //  }
+  body {
+    background-image: url("../../static/login-background.jpg");
+    background-color: #cccccc;
+    background-repeat: no-repeat;
+    background-size: cover;
+   }
+
+   .loginLabel{
+    color: #ffffff; 
+    font-size: 25px;
+    text-shadow: 2px 2px #8a8a8a5c;
+   }

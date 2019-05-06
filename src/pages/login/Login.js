@@ -61,10 +61,11 @@ class Login extends Component {
 	render() {
 		return (          
 			<Container>
+        <h1 style={{color: '#ffffff',  textAlign: 'center', textShadow: '2px 2px #8a8a8a5c', fontSize: '65px'}}>Drinking Buddies</h1>
                 <div className="Login">
                     <Form onSubmit={this.handleSubmit}>
                     <FormGroup >
-                        <Label for="userName">UserName</Label>
+                        <Label for="userName" className="loginLabel">UserName</Label>
                         <Input 
                             type="input" 
                             name="userName" 
@@ -76,7 +77,7 @@ class Login extends Component {
                     </FormGroup> 
 
                     <FormGroup>
-                        <Label for="userPassword">Password</Label>
+                        <Label for="userPassword" className="loginLabel">Password</Label>
                         <Input 
                             type="password" 
                             name="password" 
